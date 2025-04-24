@@ -17,8 +17,6 @@ Esse projeto tem como objetivo coletar denúncias de pragas urbanas realizadas p
 - CSS
 - Firebase (para autenticação e banco de dados)
 - JavaScript (Criação do Dashboard e conexão com o mapa.)
-### 📱 Mobile
-
 ---
 
 ## 🧑‍💻 Equipe
