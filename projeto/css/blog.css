@@ -1,0 +1,150 @@
+/* Reset básico de margens e paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fonte e layout básico */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Estilo do cabeçalho */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo-container {
+    margin-bottom: 0; /* Removido o margin-bottom para alinhar melhor o logo */
+}
+
+/* Estilo para a logo */
+.logo-container img {
+    width: 100%;
+    max-width: 300px;
+    min-width: 150px;
+    height: auto;
+    max-height: 150px;
+    min-height: 75px;
+    object-fit: contain;
+}
+
+/* Estilo do menu */
+header nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espaçamento entre os itens do menu */
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    background-color: #575757; /* Cor de fundo ao passar o mouse */
+}
+
+/* Conteúdo principal */
+main {
+    padding: 20px;
+}
+
+/* Contêiner de artigos */
+.article-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Artigo */
+.article {
+    display: flex;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.article .article-image {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.article .article-img {
+    width: 100%;               /* A imagem vai preencher a largura disponível */
+    height: 200px;             /* Define a altura fixa das imagens */
+    min-height: 150px;         /* Garante que a altura mínima seja de 150px */
+    object-fit: cover;         /* Garante que a imagem preencha o contêiner sem distorcer */
+    border-radius: 5px;        /* Bordas arredondadas para a imagem */
+}
+
+.article .article-content {
+    flex: 2;
+}
+
+.article h3 {
+    margin-bottom: 10px;
+}
+
+.article p {
+    margin-bottom: 10px;
+}
+
+.read-more-button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.read-more-button:hover {
+    background-color: #333;
+}
+
+/* Rodapé */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+footer .social-media {
+    list-style: none;
+    padding: 0;
+}
+
+footer .social-media li {
+    display: inline;
+    margin: 0 10px;
+}
+
+footer .social-media li a {
+    color: white;
+    text-decoration: none;
+}
+
+footer .social-media li a:hover {
+    color: #3498db;
+}
