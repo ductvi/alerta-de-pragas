@@ -1,52 +1,152 @@
-#map { height: 600px; width: 100%; }
-        .controls { margin: 10px; padding: 10px; background: #f0f0f0; }
-
-/* Estilo do cabeçalho */
-header {
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Estilo do corpo */
+  body {
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  /* Estilo do cabeçalho */
+  header {
     background-color: #333;
     color: white;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-header .logo-container {
-    margin-bottom: 0; /* Removido o margin-bottom para alinhar melhor o logo */
-}
-
-/* Estilo para a logo */
-.logo-container img {
+  }
+  
+  /* Estilo do container da logo */
+  .logo-container img {
     width: 100%;
     max-width: 300px;
-    min-width: 150px;
     height: auto;
     max-height: 150px;
-    min-height: 75px;
     object-fit: contain;
-}
-
-/* Estilo do menu */
-header nav ul {
+  }
+  
+  /* Estilo do menu de navegação */
+  nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    gap: 20px; /* Espaçamento entre os itens do menu */
-}
-
-header nav ul li {
+    gap: 20px;
+  }
+  
+  nav ul li {
     display: inline;
-}
-
-header nav ul li a {
+  }
+  
+  nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
     padding: 8px 12px;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-}
-
-header nav ul li a:hover {
-    background-color: #575757; /* Cor de fundo ao passar o mouse */
-}
+  }
+  
+  nav ul li a:hover {
+    background-color: #575757;
+  }
+  
+  /* Estilo dos controles acima do mapa */
+  .controls {
+    background-color: #ecf0f1;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Grupo de controles */
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* Estilo de labels */
+  label {
+    font-weight: 500;
+  }
+  
+  /* Estilo dos inputs, selects e botões */
+  input, select, button {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #bdc3c7;
+    background-color: white;
+  }
+  
+  /* Estilo específico dos botões */
+  button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Estilo do mapa */
+  #map {
+    height: calc(100vh - 160px); /* Altura ajustada para considerar cabeçalho e controles */
+    width: 100%;
+  }
+  
+  /* Estilo do rodapé */
+  footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  /* Estilo do conteúdo dos popups do mapa */
+  .leaflet-popup-content {
+    min-width: 200px;
+  }
+  
+  .popup-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2c3e50;
+  }
+  
+  .popup-row {
+    margin: 3px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .popup-label {
+    font-weight: 500;
+    color: #7f8c8d;
+  }
+  
+  /* Estilo do resultado do endereço */
+  #resultadoEndereco {
+    margin-top: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    display: none;
+  }
+  
