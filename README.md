@@ -12,12 +12,19 @@ Esse projeto tem como objetivo coletar denúncias de pragas urbanas realizadas p
 
 ## 🛠️ Tecnologias utilizadas
 
-### 🌐 Web
-- HTML
-- CSS
-- Firebase (para autenticação e banco de dados)
-- JavaScript (Criação do Dashboard e conexão com o mapa.)
----
+# 🌐 Tecnologias Web Utilizadas
+
+- **HTML** - Estruturação da página web  
+  ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+
+- **CSS** - Estilização da interface  
+  ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+
+- **Firebase** - Autenticação de usuários e banco de dados em tempo real  
+  ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)
+
+- **JavaScript** - Lógica do dashboard e integração com mapas  
+  ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
 ## 🧑‍💻 Equipe
 - Eduardo Custódio Vieira  
