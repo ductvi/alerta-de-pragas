@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plague Alert - Dashboard</title>
+  <link rel="stylesheet" href="../css/home.css">
+  <style>
+    body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f5f5f5; }
+    .dashboard-container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .filters select { padding: 8px; margin-left: 10px; border-radius: 4px; border: 1px solid #ddd; }
+    .stats-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
+    .stat-label { font-size: 16px; color: #666; margin-bottom: 10px; }
+    .stat-value { font-size: 24px; font-weight: bold; color: #2c3e50; }
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .chart-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .chart-title { margin-top: 0; color: #2c3e50; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="../imagens/DENGOSO.png" alt="Plague Alert Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="denuncia.html">Denúncia</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h1>Estatísticas de Pragas</h1>
+      <div class="filters">
+        <select id="timeFilter">
+          <option value="7days">Últimos 7 dias</option>
+          <option value="30days">Últimos 30 dias</option>
+          <option value="all" selected>Todos os registros</option>
+        </select>
+        <select id="regionFilter">
+          <option value="all" selected>Todas as regiões</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-label">Total de Denúncias</div>
+        <div class="stat-value" id="totalReports">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Praga Mais Reportada</div>
+        <div class="stat-value" id="topPlague">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Região Mais Afetada</div>
+        <div class="stat-value" id="topRegion">-</div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-container">
+        <h2 class="chart-title">Distribuição por Tipo de Praga</h2>
+        <canvas id="plagueTypeChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <h2 class="chart-title">Denúncias por Dia</h2>
+        <canvas id="dailyReportsChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Plague Alert - Todos os direitos reservados</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBZ_Wyii2n79cPkpalEp6_Lx_OX6B4l09w",
+      authDomain: "plague-alert.firebaseapp.com",
+      projectId: "plague-alert",
+      storageBucket: "plague-alert.appspot.com",
+      messagingSenderId: "847679471985",
+      appId: "1:847679471985:web:c4903bea1637ed248cf6d0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Função para extrair a cidade do endereço completo
+    const extractCity = (endereco) => {
+      if (!endereco) return 'Local não especificado';
+      // Extrai a parte após o último "-" (ex: "Mooca - São Paulo, SP" → "São Paulo, SP")
+      const parts = endereco.split('-');
+      return parts[parts.length - 1].trim();
+    };
+
+    const loadData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "markers"));
+        const reports = querySnapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            date: data.createdAt?.toDate() || new Date(),
+            type: data.type || 'Desconhecido',
+            endereco: data.endereco || 'Local não especificado',
+            cidade: extractCity(data.endereco),
+            ...data
+          };
+        });
+
+        updateStats(reports);
+        populateRegionFilter(reports);
+        renderCharts(reports);
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      }
+    };
+
+    // Atualizada para usar o campo 'endereco'
+    const populateRegionFilter = (reports) => {
+      const regionFilter = document.getElementById('regionFilter');
+      regionFilter.innerHTML = '<option value="all" selected>Todas as regiões</option>';
+      
+      // Extrai cidades únicas
+      const cidades = [...new Set(reports.map(r => r.cidade))].filter(Boolean);
+      
+      cidades.forEach(cidade => {
+        const option = document.createElement('option');
+        option.value = cidade;
+        option.textContent = cidade;
+        regionFilter.appendChild(option);
+      });
+    };
+
+    // Atualizada para usar o campo 'endereco'
+    const updateStats = (reports) => {
+      document.getElementById('totalReports').textContent = reports.length;
+      
+      // Praga mais reportada
+      const plagueCounts = reports.reduce((acc, { type }) => {
+        acc[type] = (acc[type] || 0) + 1;
+        return acc;
+      }, {});
+      
+      const topPlague = Object.entries(plagueCounts).sort((a, b) => b[1] - a[1])[0];
+      document.getElementById('topPlague').textContent = topPlague?.[0] || "-";
+      
+      // Região mais afetada (agora por cidade)
+      const cidadeCounts = reports.reduce((acc, { cidade }) => {
+        acc[cidade] = (acc[cidade] || 0) + 1;
+        return acc;
+      }, {});
+      
+      const topCidade = Object.entries(cidadeCounts).sort((a, b) => b[1] - a[1])[0];
+      document.getElementById('topRegion').textContent = topCidade?.[0] || "-";
+    };
+
+    const renderCharts = (reports) => {
+      // Gráfico de tipos de praga (mantido igual)
+      const plagueTypes = reports.reduce((acc, { type }) => {
+        acc[type] = (acc[type] || 0) + 1;
+        return acc;
+      }, {});
+
+      new Chart(document.getElementById('plagueTypeChart'), {
+        type: 'bar',
+        data: {
+          labels: Object.keys(plagueTypes),
+          datasets: [{
+            label: 'Ocorrências',
+            data: Object.values(plagueTypes),
+            backgroundColor: [
+              '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
+              '#9966FF', '#FF9F40', '#8AC24A', '#F06292'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+
+      // Gráfico de denúncias por dia (mantido igual)
+      const dailyCounts = reports.reduce((acc, report) => {
+        const date = report.date.toLocaleDateString('pt-BR');
+        acc[date] = (acc[date] || 0) + 1;
+        return acc;
+      }, {});
+
+      const sortedDates = Object.keys(dailyCounts).sort((a, b) => new Date(a) - new Date(b));
+      
+      new Chart(document.getElementById('dailyReportsChart'), {
+        type: 'line',
+        data: {
+          labels: sortedDates,
+          datasets: [{
+            label: 'Denúncias',
+            data: sortedDates.map(date => dailyCounts[date]),
+            borderColor: '#36A2EB',
+            backgroundColor: 'rgba(54, 162, 235, 0.1)',
+            borderWidth: 2,
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', loadData);
+  </script>
+</body>
+</html>

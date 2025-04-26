@@ -1,0 +1,184 @@
+/* Reset básico de margens e paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fonte e layout básico */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+ /* Estilo do cabeçalho */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo-container {
+    margin-bottom: 0; /* Removido o margin-bottom para alinhar melhor o logo */
+}
+
+/* Estilo para a logo */
+.logo-container img {
+    width: 100%;
+    max-width: 300px;
+    min-width: 150px;
+    height: auto;
+    max-height: 150px;
+    min-height: 75px;
+    object-fit: contain;
+}
+
+/* Estilo do menu */
+header nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espaçamento entre os itens do menu */
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    background-color: #575757; /* Cor de fundo ao passar o mouse */
+}
+  /* ===== LAYOUT DO DASHBOARD ===== */
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* ===== FILTROS ===== */
+  .filters {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  select {
+    padding: 0.5rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.25rem;
+    min-width: 150px;
+  }
+  
+  /* ===== CARDS DE ESTATÍSTICAS ===== */
+  .stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1e40af;
+    margin: 0.5rem 0;
+  }
+  
+  .stat-label {
+    color: #64748b;
+    font-size: 0.875rem;
+  }
+  
+  /* ===== GRÁFICOS ===== */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .chart-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .chart-title {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: #1e293b;
+  }
+  
+ /* Rodapé */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+footer .social-media {
+    list-style: none;
+    padding: 0;
+}
+
+footer .social-media li {
+    display: inline;
+    margin: 0 10px;
+}
+
+footer .social-media li a {
+    color: white;
+    text-decoration: none;
+}
+
+footer .social-media li a:hover {
+    color: #3498db;
+}
+  /* ===== RESPONSIVO ===== */
+  @media (max-width: 768px) {
+    .dashboard-header {
+      flex-direction: column;
+    }
+    
+    .filters {
+      width: 100%;
+    }
+    
+    select {
+      width: 100%;
+    }
+    
+    .charts-grid {
+      grid-template-columns: 1fr;
+    }
+  }

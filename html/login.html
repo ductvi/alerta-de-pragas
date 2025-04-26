@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/googlebutton.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <main class="container">
+        <div class="logo-container">
+            <img src="../imagens/DENGOSO.png" alt="Minha Logo">
+            <h3></h3>
+        </div>
+
+        <form id="login-form">
+            <input type="email" id="email-login" name="email" placeholder="Email" required>
+            <input type="password" id="senha-login" name="senha" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+            <a href="resetSenha.html">Esqueceu a senha?</a>
+            <button class="create-account" onclick="window.location.href='cadastro.html'">Criar nova conta</button>
+            <!-- Área de mensagem de erro -->
+            <div id="error-message-login" style="color: red; margin-top: 10px;"></div>
+            <button class="gsi-material-button">
+                <div class="gsi-material-button-state"></div>
+                <div class="gsi-material-button-content-wrapper">
+                  <div class="gsi-material-button-icon">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                      <path fill="none" d="M0 0h48v48H0z"></path>
+                    </svg>
+                  </div>
+                  <span class="gsi-material-button-contents">Continue com Google</span>
+                  <span style="display: none;">Continue with Google</span>
+                </div>
+              </button>
+        </form>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2025 Plague Alert - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Scripts do Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+        // Suas configurações do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBZ_Wyii2n79cPkpalEp6_Lx_OX6B4l09w",
+            authDomain: "plague-alert.firebaseapp.com",
+            projectId: "plague-alert",
+            storageBucket: "plague-alert.firebasestorage.app",
+            messagingSenderId: "847679471985",
+            appId: "1:847679471985:web:c4903bea1637ed248cf6d0",
+            measurementId: "G-7CT71FZKBV"
+        };
+
+        // Inicializando Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Função para login
+        async function loginUser(email, senha) {
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+                console.log("Usuário logado:", userCredential.user);
+                window.location.href = 'home.html'; // Redireciona após login
+            } catch (error) {
+                console.error("Erro ao logar:", error.message);
+                // Exibe a mensagem de erro na div
+                const errorMessageElement = document.getElementById('error-message-login');
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                    errorMessageElement.textContent = "Usuário ou senha incorretos.";
+                } else {
+                    errorMessageElement.textContent = "Erro ao tentar fazer login. Tente novamente.";
+                }
+            }
+        }
+
+        // Captura o evento de envio do formulário de login
+        document.getElementById('login-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const email = document.getElementById('email-login').value;
+            const senha = document.getElementById('senha-login').value;
+            loginUser(email, senha);
+        });
+    </script>
+</body>
+
+</html>
