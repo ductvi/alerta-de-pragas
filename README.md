@@ -1,4 +1,4 @@
-# 🌾 Sistema de Alerta de Pragas
+# Sistema de Alerta de Pragas (Prague Alert)
 
 Esse projeto tem como objetivo coletar denúncias de pragas urbanas realizadas pelos usuários em sua localização.
 ---
@@ -7,10 +7,10 @@ Esse projeto tem como objetivo coletar denúncias de pragas urbanas realizadas p
 - Dashboard informativo sobre as denúncias.
 - Sistema de denúncia por um mapa.
 - Blog informativo sobre como combate-las
+![Screenshot](imagens/printdosite(github).jpg)
+
 
 ---
-
-## 🛠️ Tecnologias utilizadas
 
 # 🌐 Tecnologias Web Utilizadas
 
@@ -38,8 +38,7 @@ Esse projeto tem como objetivo coletar denúncias de pragas urbanas realizadas p
 
 ## 📌 Status do projeto
 🚧 Em desenvolvimento – Funcionalidades em andamento:
-- Dashboard Inicial  
-- Aperfeiçoamento na autenticação (Esqueci a senha e Continuar com o Google.)
+- Aperfeiçoamento na autenticação (Esqueci a senha.)
 
 ---
 
