@@ -8,7 +8,7 @@ Esse projeto tem como objetivo coletar denúncias de pragas urbanas realizadas p
 - Sistema de denúncia por um mapa.
 - Blog informativo sobre como combate-las
 
-![Print do site](imagens/print%20do%20site%20%28github%29.png)
+![Print do site](imagens/print.jpg)
 
 
 
